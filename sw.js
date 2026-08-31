@@ -1,5 +1,5 @@
 /* Bright Patch offline cache. Bump VERSION whenever you upload a new index.html. */
-var VERSION = "bright-patch-v15";
+var VERSION = "bright-patch-v16";
 var FILES = ["./", "./index.html", "./app.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 self.addEventListener("install", function(e){
   e.waitUntil(caches.open(VERSION).then(function(c){ return c.addAll(FILES); }).then(function(){ return self.skipWaiting(); }));
@@ -16,6 +16,6 @@ self.addEventListener("fetch", function(e){
       var copy = res.clone();
       if (new URL(e.request.url).origin === location.origin) caches.open(VERSION).then(function(c){ c.put(e.request, copy); });
       return res;
-    }).catch(function(){ return caches.match(e.request); })
+    }).catch(function(){ return caches.match(e.request, {ignoreSearch:true}); })
   );
 });

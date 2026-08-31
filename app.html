@@ -16,8 +16,6 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>[hidden]{display:none!important} html{color-scheme:light dark}</style>
 <title>Bright Patch</title>
-</head>
-<body>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
 :root{
@@ -912,8 +910,22 @@ function paintSponsor(){
 $("sponsorSave").addEventListener("click", function(){ S.sponsor=$("sponsorField").value.slice(0,80); save(); paintSponsor(); chimeSoft(); });
 
 /* ---------- support / payments ---------- */
+var SRC = "";
+(function(){
+  try{
+    var q = new URLSearchParams(location.search);
+    var s = q.get("utm_source") || q.get("src") || "", c = q.get("utm_campaign") || "";
+    var v = (s + (c ? "_" + c : "")).replace(/[^A-Za-z0-9_-]/g, "").slice(0, 60);
+    if(v) localStorage.setItem("bp-src", v);
+    SRC = localStorage.getItem("bp-src") || "";
+  }catch(e){}
+})();
+function payUrl(u){
+  if(!u || !SRC || !/^https:\/\/buy\.stripe\.com\//.test(u)) return u;
+  return u + (u.indexOf("?") < 0 ? "?" : "&") + "client_reference_id=" + SRC;
+}
 function wireLink(id, url){
-  var a=$(id);
+  var a=$(id); url=payUrl(url);
   if(url){ a.href=url; a.classList.remove("soon"); a.querySelector(".soonlbl").textContent=""; }
   else { a.removeAttribute("href"); a.classList.add("soon"); a.querySelector(".soonlbl").textContent=t("soon"); }
 }
@@ -931,7 +943,7 @@ function paintSupport(){
 function openCrypto(){
   var grid=$("cryptoGrid"); grid.innerHTML="";
   if(LINKS.crypto){
-    var a=document.createElement("a"); a.className="supportcard"; a.href=LINKS.crypto; a.target="_blank"; a.rel="noopener";
+    var a=document.createElement("a"); a.className="supportcard"; a.href=payUrl(LINKS.crypto); a.target="_blank"; a.rel="noopener";
     a.innerHTML='<span class="icon">🛒</span><span><h3></h3><p></p></span>'; a.querySelector("h3").textContent=t("crypto_checkout_t"); a.querySelector("p").textContent=t("crypto_checkout_d");
     grid.appendChild(a);
   }
