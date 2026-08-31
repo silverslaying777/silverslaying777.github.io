@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Your Bright Patch code</title>
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--ground:#F7EFDF;--surface:#FFFDF7;--ink:#33281B;--ink-soft:#6B5D48;--accent:#C97016;--accent-deep:#A55A0E;--accent-soft:#F3DDBE;--good:#3E7C3C;--line:#E3D5BC;--shadow:rgba(72,52,22,.16);}
+@media (prefers-color-scheme: dark){:root{--ground:#241E15;--surface:#322A1F;--ink:#F4EADB;--ink-soft:#C2B49C;--accent:#E89B45;--accent-deep:#F0B269;--accent-soft:#4A3A22;--good:#7FBF7A;--line:#493E2D;--shadow:rgba(0,0,0,.45);}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Atkinson Hyperlegible",Verdana,sans-serif;font-size:19px;line-height:1.55;}
+.wrap{max-width:620px;margin:0 auto;padding:40px 22px 70px;text-align:center}
+.mark{font-size:56px}
+h1{font-family:"Fraunces",Georgia,serif;font-size:clamp(30px,6vw,42px);margin:6px 0 8px;text-wrap:balance}
+p{margin:10px auto;max-width:48ch;color:var(--ink-soft)}
+.codebox{background:var(--surface);border:3px solid var(--good);border-radius:22px;padding:22px;margin:24px 0 14px;box-shadow:0 6px 18px var(--shadow)}
+.label{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);font-weight:700}
+.code{font-family:"Courier New",monospace;font-size:clamp(38px,9vw,56px);font-weight:700;letter-spacing:3px;margin:8px 0 14px;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:58px;padding:12px 26px;border-radius:16px;font-weight:700;font-size:19px;text-decoration:none;border:3px solid transparent;cursor:pointer;font-family:inherit}
+.btn.primary{background:var(--accent);color:#FFF8EA;box-shadow:0 4px 12px var(--shadow)}
+.btn.quiet{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+ol{text-align:left;max-width:46ch;margin:22px auto;padding-left:22px}
+ol li{margin:8px 0}
+.small{font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mark">🌻</div>
+  <h1>Thank you! Here is your unlock code.</h1>
+  <p>Write it down or take a screenshot — it opens all five games on one device.</p>
+  <div class="codebox">
+    <div class="label">Bright Patch Complete · unlock code</div>
+    <div class="code" id="code">BRIGHT-0000</div>
+    <button class="btn quiet" id="copy">Copy code</button>
+  </div>
+  <div class="row"><a class="btn primary" href="app.html">Open Bright Patch</a></div>
+  <ol>
+    <li>Open Bright Patch on the phone, tablet, or computer your loved one will use.</li>
+    <li>Tap any game marked <b>🔒 Complete</b>, or go to <b>Caregiver → Enter unlock code</b>.</li>
+    <li>Type the code above and tap <b>Unlock</b>. That's it — the games stay unlocked on that device.</li>
+  </ol>
+  <p class="small">A receipt from Stripe is on its way to your email. If the code doesn't work within 14 days, reply to that receipt and we'll make it right.</p>
+</div>
+<script>
+(function(){
+  /* Derive a valid code from the Stripe checkout session id so each buyer sees their own;
+     falls back to a random valid code. Validity rule: (7·d1 + 3·d2 + 9·d3) mod 10 = d4. */
+  var sid = (new URLSearchParams(location.search).get("session_id") || "");
+  var h = 0;
+  for (var i = 0; i < sid.length; i++) { h = (h * 31 + sid.charCodeAt(i)) >>> 0; }
+  if (!sid) { h = Math.floor(Math.random() * 1e9); }
+  var d1 = h % 10, d2 = Math.floor(h / 10) % 10, d3 = Math.floor(h / 100) % 10;
+  var d4 = (7 * d1 + 3 * d2 + 9 * d3) % 10;
+  var code = "BRIGHT-" + d1 + d2 + d3 + d4;
+  document.getElementById("code").textContent = code;
+  var b = document.getElementById("copy");
+  b.addEventListener("click", function(){
+    try { navigator.clipboard.writeText(code).then(function(){ b.textContent = "Copied ✓"; setTimeout(function(){ b.textContent = "Copy code"; }, 2000); }); } catch(e) {}
+  });
+})();
+</script>
+</body>
+</html>
