@@ -18,13 +18,13 @@ p.small{font-size:15px;color:#6B5D48}
 <main>
   <div class="sun">🌻</div>
   <h1>One moment…</h1>
-  <p>Taking you to our secure Stripe checkout for the $4 Bright Patch unlock. Your code appears the moment you pay.</p>
-  <a class="btn" id="go" href="https://buy.stripe.com/8x28wQgeS1RLcIO2OkgQE04">Continue to checkout →</a>
+  <p>Taking you to our secure Stripe checkout for the $1 Bright Patch unlock. Your code appears the moment you pay.</p>
+  <a class="btn" id="go" href="https://buy.stripe.com/bJecN69Qu9kd7ou4WsgQE05">Continue to checkout →</a>
   <p class="small">Cards, Apple Pay, and Google Pay accepted. Payment is handled by Stripe; we never see your card number.</p>
 </main>
 <script>
 (function(){
-  var u = "https://buy.stripe.com/8x28wQgeS1RLcIO2OkgQE04";
+  var u = "https://buy.stripe.com/bJecN69Qu9kd7ou4WsgQE05";
   try{ var src = localStorage.getItem("bp-src"); if(src) u += "?client_reference_id=" + src; }catch(e){}
   document.getElementById("go").href = u;
   setTimeout(function(){ location.replace(u); }, 1500);
