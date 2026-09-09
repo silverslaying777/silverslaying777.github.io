@@ -795,7 +795,7 @@ var LINKS = {
 };
 /* Legal footer. Set patentPending to true ONLY after the USPTO confirms your
    provisional application was filed — marking before filing is a federal offense. */
-var LEGAL = { owner:"", patentPending:false };
+var LEGAL = { owner:"M-1 MEDICAL LLC", patentPending:false };
 /* Optional: direct wallet addresses for crypto tips. Each one you fill in
    appears with a QR code on the "Pay with crypto" screen. Leave blank to hide. */
 var WALLETS = [
@@ -5319,7 +5319,7 @@ function applyLang(){
   var h=new Date().getHours();
   $("greeting").textContent = h<12 ? t("greet_morning") : h<17 ? t("greet_afternoon") : t("greet_evening");
   var yr=new Date().getFullYear();
-  $("legalLine").textContent = "Bright Patch\u2122 \u00a9 "+yr+(LEGAL.owner?" "+LEGAL.owner:"")+". "+t("legal_rights")+(LEGAL.patentPending?" "+t("patent_pending"):"");
+  $("legalLine").textContent = "Bright Patch\u2122 and the Patch Pals\u2122 \u00a9 "+yr+(LEGAL.owner?" "+LEGAL.owner:"")+". "+t("legal_rights")+(LEGAL.patentPending?" "+t("patent_pending"):"");
   paintSound(); paintPremium(); paintSponsor(); paintSupport(); if(typeof paintIAP==='function') paintIAP(); if(typeof paintPromo==='function') paintPromo();
 }
 function openLang(){
